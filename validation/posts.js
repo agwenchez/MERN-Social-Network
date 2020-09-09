@@ -1,4 +1,4 @@
-export default creaPostValidator = (req,res,next) => {
+exports.createPostValidator = (req,res,next) => {
     // title
     req.check("title", "Write a title").notEmpty();
     req.check("title", "Title must be between 4 to 150 words").isLength({
@@ -19,7 +19,7 @@ export default creaPostValidator = (req,res,next) => {
 
     if(errors){
         const firstError = errors.map( error => error.msg)[0];
-        return res.status(400).json(firstError);
+        return res.status(400).json({errors: firstError});
     }
 
     // proceed to next middleware
