@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const Messages = require('./routes/Messages')
+const posts = require('./routes/posts')
 const port = process.env.PORT || 5000;
-const Pusher = require('pusher')
+// const Pusher = require('pusher')
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
@@ -12,7 +12,7 @@ app.use(express.json({extended:false}));
 
 // DB connection
 mongoose
-    .connect('mongodb://localhost:27017/whatsapp-clone',{
+    .connect('mongodb://localhost:27017/social_network',{
     useCreateIndex:true,
     // useFindAndModify:true,
     useUnifiedTopology:true,
@@ -41,7 +41,7 @@ mongoose
     //     })
     // })
 // import routes
-app.use('/messages', Messages);
+app.use('/messages', posts);
 
 
 
