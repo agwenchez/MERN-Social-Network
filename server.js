@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const posts = require('./routes/posts')
 const port = process.env.PORT || 4000;
 const dotenv = require('dotenv');
+const expressValidator = require('express-validator');
+
 dotenv.config();
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
+
+app.use(expressValidator());
 
 const db = process.env.MONGO_URI;
 
