@@ -9,11 +9,11 @@ dotenv.config();
 // bodyParser Middleware
 app.use(express.json({extended:false}));
 
-
+const db = process.env.MONGO_URI;
 
 // DB connection
 mongoose
-    .connect('mongodb://localhost:27017/social_network',{
+    .connect(db,{
     useCreateIndex:true,
     // useFindAndModify:true,
     useUnifiedTopology:true,
