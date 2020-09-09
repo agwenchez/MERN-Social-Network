@@ -1,22 +1,21 @@
-import  express from 'express';
+const express = require('express');
 const router = express.Router();
-const Posts = require('../models/Posts')
+const Post = require('../models/Posts')
 
 router.get('/',(req,res)=>{
     res.status(500).send('This route works');
 })
 
 // create new post
-router.post('/post',(req, res)=>{
+router.post('/new',(req, res)=>{
      data = req.body
 
-    Posts.create(data, (err,data)=>{
-        if(err){
-            res.status(500).send(err);
-        }else{
-            res.status(201).json(data);
-        }
-    })
+    const newPost = new Post(data);
+    newPost.save()
+        .then( result =>{
+            res.status(201).json(result);
+        })
+        .catch(err => console.log(err));
 
 })
 

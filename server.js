@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const posts = require('./routes/posts')
-const port = process.env.PORT || 5000;
-// const Pusher = require('pusher')
+const port = process.env.PORT || 4000;
+const dotenv = require('dotenv');
+dotenv.config();
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
@@ -19,7 +20,7 @@ mongoose
     useNewUrlParser:true
     })
     .then( ()=>{
-        app.listen(port, ()=>console.log(` Listening on PORT: ${port}`));
+        app.listen(port, ()=>console.log(` MongoDB connected. Listening on PORT: ${port}`));
     })
     .catch(
         error =>{
@@ -27,21 +28,9 @@ mongoose
         }
     )
 
-    const db = mongoose.connection;
-    db.once('open', ()=>{
-        console.log('connected DB for use with Pusher');
-    })
-
-    //     const msgCollection = db.collection("messagescontent");
-    //     const changeStream = msgCollection.watch();
-    //     // console.log(changeStream);
-
-    //     changeStream.on("change", change =>{
-    //         console.log("A change occured :", change);
-    //     })
-    // })
+   
 // import routes
-app.use('/messages', posts);
+app.use('/posts', posts);
 
 
 
