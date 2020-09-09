@@ -9,7 +9,7 @@ exports.createPostValidator = (req,res,next) => {
 
     // body
     req.check("body", "Write a body").notEmpty();
-    req.check("body", "Title must be between 4 to 2000 words").isLength({
+    req.check("body", "Body must be between 4 to 2000 words").isLength({
         min:4,
         max:2000
     })
@@ -18,8 +18,8 @@ exports.createPostValidator = (req,res,next) => {
     errors = req.validationErrors();
 
     if(errors){
-        const firstError = errors.map( error => error.msg)[0];
-        return res.status(400).json({errors: firstError});
+        const Errors = errors.map( error => error.msg);
+        return res.status(400).json({errors: Errors});
     }
 
     // proceed to next middleware
