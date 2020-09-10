@@ -35,6 +35,28 @@ exports.userSignupValidator = (req,res,next)=>{
     }
 
 
-// call the next middleware
+    // call the next middleware
     next()
+}
+
+
+exports.userSigninValidator = (req,res,next) =>{
+
+
+
+    // check for errors
+    errors = req.validationErrors();
+
+    if(errors){
+        const Errors = errors.map( error => error.msg);
+        return res.status(400).json({errors: Errors});
+    }
+
+
+    // call the next middleware
+    next()
+
+
+
+
 }

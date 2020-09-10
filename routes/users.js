@@ -67,13 +67,15 @@ User.findOne({email}).then( user =>{
 
     // authenticate user, make sure password and useramematch
     if(!user.authenticate(password)){
-        return express.status(401).send('Email and password dont match')
+        return res.status(401).send('Email and password dont match')
     }
 
     //if authenticated user, generate token
     const token = jwt.sign({_id:user._id}, JWTsecret)
+
     //persist the token as t with expiry date 
     res.cookie("t",token, {expire: new Date() + 3600})
+    
     // return user together with token to the client
     const {_id, name, email} =user;
     return res.json({token,  user:{_id, name, email}})
