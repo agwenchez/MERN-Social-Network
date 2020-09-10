@@ -3,8 +3,12 @@ const router = express.Router();
 const Post = require('../models/Posts')
 const {createPostValidator}= require('../validation/posts');
 
-router.get('/',(req,res)=>{
-    res.status(500).send('This route works');
+// get all posts
+router.get('/all',(req,res)=>{
+    Post.find()
+    .then( posts =>{
+        res.status(200).json(posts)
+    }).catch(err => res.status(500).json({error: err}))
 })
 
 // create new post

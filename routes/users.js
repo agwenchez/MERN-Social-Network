@@ -3,9 +3,18 @@ const router = express.Router();
 const User = require('../models/Users');
 const { userSignupValidator } = require('../validation/users')
 
+// get all users
+// get all posts
+router.get('/all',(req,res)=>{
+    User.find()
+    .then( users =>{
+        res.status(200).json(users)
+    }).catch(err => res.status(500).json({error: err}))
+})
 
 
-router.post('/signin', userSignupValidator, async (req,res)=>{
+// user signup
+router.post('/signup', userSignupValidator, async (req,res)=>{
 
     const {name, email, password}=req.body;
     const userExists = await User.findOne({email})

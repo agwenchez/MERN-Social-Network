@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const posts = require('./routes/posts')
 const port = process.env.PORT || 4000;
 const expressValidator = require('express-validator');
 require('dotenv').config();
+
+const postRoute = require('./routes/posts')
+const userRoute = require('./routes/users')
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
@@ -32,7 +34,8 @@ mongoose
 
    
 // import routes
-app.use('/posts', posts);
+app.use('/posts', postRoute);
+app.use('/users', userRoute);
 
 
 
