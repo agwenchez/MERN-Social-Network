@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const uuidv1 = require('uuid/v1')
+// const uuidv1 = require('uuid/v1')
 const crypto = require('crypto');
 
 
 const userSchema = new Schema({
     name:{
         type:String,
-        required:true,
-        trim: true
+        required:true
     },
     email:{
         type:String,
@@ -30,14 +29,15 @@ const userSchema = new Schema({
 
 
 // virtual fields
-userSchema.virtual(password)
-.set( password=>{
+userSchema.virtual('password')
+.set( function(password){
 
 // create a temp field _password
 this._password = password
 
 // generate timestamp
-this.salt = uuidv1();
+
+this.salt = Date.now()
 
 // encrypt password
 this.password_hash = this.encryptPassword(password)
@@ -47,13 +47,16 @@ this.password_hash = this.encryptPassword(password)
 
 
 userSchema.methods = {
-    encryptPassword: (password)=>{
+    encryptPassword: function(password){
         if(!password) return ""
         try{
          
-            return crypto.createHmac('sha256', this.salt)
+             const hash = crypto.createHmac('sha256', this.salt)
                                .update(password)
                                .digest('hex');
+            console.log(hash)
+            return hash;
+            
            
         }catch(err){
             return "";

@@ -4,7 +4,6 @@ const User = require('../models/Users');
 const { userSignupValidator } = require('../validation/users')
 
 // get all users
-// get all posts
 router.get('/all',(req,res)=>{
     User.find()
     .then( users =>{
@@ -13,22 +12,44 @@ router.get('/all',(req,res)=>{
 })
 
 
+
+
 // user signup
-router.post('/signup', userSignupValidator, async (req,res)=>{
+router.post('/signup', userSignupValidator,(req,res)=>{
 
-    const {name, email, password}=req.body;
-    const userExists = await User.findOne({email})
-        if(userExists) {
-            res.status(403).send("A user with that email already exists")
-        }
-
-    const newUser = await new User(
+    const {
         name,
         email,
         password
-    )
-    await newUser.save()
-    res.status(201).json({msg: "Signin successful"})
+      
+    } = req.body;
+
+    User.findOne({
+        email
+    }).then(user => {
+        if (user) {
+            return res.status(400).json({
+                msg: "Email already exists"
+            })
+        } else {
+            // create new artist
+            const newUser = new User({
+                name,
+                email,
+                password
+            })
+            newUser.save()
+                .then(
+                    user => {
+                        res.status(200).json(user);
+                        console.log(user);
+                    })
+                .catch(err => console.log(err));
+
+
+        }
+
+    }).catch(err => console.log(err));
    
 
 

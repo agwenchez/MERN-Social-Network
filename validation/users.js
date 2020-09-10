@@ -8,7 +8,7 @@ exports.userSignupValidator = (req,res,next)=>{
 
     // email is not null, is valid and normailized
     req.check("email", "Kindly provide an email").notEmpty();
-    req.check("email", "Email must contain 3 to 32 characters")
+    req.check("email")
     .matches(/.+\@.+\..+/)
     .withMessage("Must be a valid email")
     .isLength({
