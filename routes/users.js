@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const jwt = require('jsonwebtoken')
+const JWTsecret = 'aduifuiafbcoani'
 const User = require('../models/Users');
 const { userSignupValidator } = require('../validation/users')
 
@@ -70,6 +71,13 @@ User.findOne({email}).then( user =>{
     }
 
     //if authenticated user, generate token
+    const token = jwt.sign({_id:user._id}, JWTsecret)
+    //persist the token as t with expiry date 
+    res.cookie("t",token, {expire: new Date() + 3600})
+    // return user together with token to the client
+    const {_id, name, email} =user;
+    return res.json({token,  user:{_id, name, email}})
+
 
 
 }).catch(err => console.log(err));

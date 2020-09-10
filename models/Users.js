@@ -48,8 +48,8 @@ this.password_hash = this.encryptPassword(password)
 
 userSchema.methods = {
 
-    authentiicate: function(plainText){
-        return this.encryptPassword(plainText) == password_hash;
+    authenticate: function(plainText){
+        return this.encryptPassword(plainText) === this.password_hash;
     },
     encryptPassword: function(password){
         if(!password) return ""
@@ -58,7 +58,6 @@ userSchema.methods = {
              const hash = crypto.createHmac('sha256', this.salt)
                                .update(password)
                                .digest('hex');
-            console.log(hash)
             return hash;
             
            
