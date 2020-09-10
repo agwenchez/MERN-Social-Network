@@ -3,14 +3,18 @@ const app = express();
 const mongoose = require('mongoose');
 const port = process.env.PORT || 4000;
 const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
+
 
 const postRoute = require('./routes/posts')
 const userRoute = require('./routes/users')
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
-
+// expressValidator middleware
 app.use(expressValidator());
+// cookieParser iddlewae
+app.use(cookieParser());
 
 const db = 'mongodb://localhost:27017/social_network';
 

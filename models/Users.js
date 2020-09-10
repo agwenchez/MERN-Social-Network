@@ -42,10 +42,15 @@ this.salt = new Date().toUTCString()
 this.password_hash = this.encryptPassword(password)
 
 })
+
 .get(()=> this._password);
 
 
 userSchema.methods = {
+
+    authentiicate: function(plainText){
+        return this.encryptPassword(plainText) == password_hash;
+    },
     encryptPassword: function(password){
         if(!password) return ""
         try{
