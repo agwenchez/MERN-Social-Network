@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router();
-const User = require('../models/Users')
+const User = require('../models/Users');
+const { signupValidator } = require('../validation/users')
 
-router.post('/signin',async (req,res)=>{
+
+
+router.post('/signin', signupValidator, async (req,res)=>{
 
     const {name, email, password}=req.body;
     const userExists = await User.findOne({email})
