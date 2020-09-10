@@ -1,4 +1,4 @@
-exports.signupValidator = (req,res,next)=>{
+exports.userSignupValidator = (req,res,next)=>{
     //name 
     req.check("name", "Kindly provide your name").notEmpty();
     req.check("name", "Name must be between 4 to 15 words").isLength({
@@ -9,7 +9,7 @@ exports.signupValidator = (req,res,next)=>{
     // email is not null, is valid and normailized
     req.check("email", "Kindly provide an email").notEmpty();
     req.check("email", "Email must contain 3 to 32 characters")
-    .matches(/.+\@.+\../)
+    .matches(/.+\@.+\..+/)
     .withMessage("Must be a valid email")
     .isLength({
         min:3,
@@ -21,7 +21,8 @@ exports.signupValidator = (req,res,next)=>{
     req.check("password")
     .isLength({min: 8})
     .withMessage( "password must contain more than 6 digits")
-    .matches()
+    .matches(/\d/)
+    .withMessage("Must contain a number")
 
 
 
