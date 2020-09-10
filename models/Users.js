@@ -5,11 +5,13 @@ const crypto = require('crypto');
 const userSchema = new Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        trim: true
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     password_hash:{
         type:String,
