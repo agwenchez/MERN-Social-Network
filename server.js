@@ -3,10 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const posts = require('./routes/posts')
 const port = process.env.PORT || 4000;
-const dotenv = require('dotenv');
 const expressValidator = require('express-validator');
-
-dotenv.config();
+require('dotenv').config();
 
 // bodyParser Middleware
 app.use(express.json({extended:false}));
