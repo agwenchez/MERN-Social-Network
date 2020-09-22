@@ -22,7 +22,7 @@ const db = 'mongodb://localhost:27017/social_network';
 mongoose
     .connect(db,{
     useCreateIndex:true,
-    // useFindAndModify:true,
+    useFindAndModify:true,
     useUnifiedTopology:true,
     useNewUrlParser:true
     })
