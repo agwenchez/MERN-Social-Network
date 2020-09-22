@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
-const {userById} = require('../middlewares/userByID')
+const {userById} = require('../middlewares/user')
 
 const { userSignupValidator } = require("../validation/users");
 
@@ -77,7 +77,7 @@ router.post('/logout', (req,res)=>{
     return res.json({msg: 'Log out successful'})
 })
 
-// Authorization
+// check for user ID
 router.param('userID', userById)
 
 

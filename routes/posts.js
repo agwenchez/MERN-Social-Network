@@ -27,6 +27,8 @@ router.post('/new', requireSignin, createPostValidator ,(req, res)=>{
 
 })
 
+// check for user ID
+router.param('userID', userById)
 
 
 module.exports = router;
