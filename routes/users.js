@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-
 const User = require("../models/Users");
-require('dotenv').config()
+const {userById} = require('../middlewares/userByID')
 
 const { userSignupValidator } = require("../validation/users");
 
@@ -78,6 +77,8 @@ router.post('/logout', (req,res)=>{
     return res.json({msg: 'Log out successful'})
 })
 
+// Authorization
+router.param('userID', userById)
 
 
 module.exports = router;

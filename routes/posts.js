@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Posts')
-
+const {userById} = require('../middlewares/userByID')
 const { requireSignin} = require('../middlewares/auth')
 
 const {createPostValidator}= require('../validation/posts');
