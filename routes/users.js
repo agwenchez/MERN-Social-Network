@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
-const {userById, getUser, requireSignin} = require('../middlewares/auth')
+const {userById, getUser, requireSignin, updateUser} = require('../middlewares/user')
 
 const { userSignupValidator } = require("../validation/users");
 
@@ -85,6 +85,10 @@ router.param('userID', userById)
 
 // get a single user
 router.get('/:userID',requireSignin, getUser)
+
+// update user
+router.put('/:userID',requireSignin, updateUser)
+
 
 
 module.exports = router;
