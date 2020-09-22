@@ -1,9 +1,9 @@
 const express_JWT =  require('express-jwt');
 const User = require("../models/Users");
 
-exports.userById = (req,res,id,next) =>{
+exports.userById = (req,res,next,id) =>{
     User.findById(id).exec((err,user)=>{
-        if(!user || err) return res.status(400).json({error:"User not Found"})
+        if(err || !user) return res.status(400).json({error:"User not Found"})
 
         req.profile = user // adds profile object in req with user info
         next();
@@ -11,7 +11,6 @@ exports.userById = (req,res,id,next) =>{
 }
 
 exports.requireSignin = express_JWT({
-
     // if token is valid, its appended to the user id in auth key to the req object
     secret: process.env.JWTsecret,
     userProperty:"auth"
@@ -24,4 +23,8 @@ exports.hasAuthorization = (req,res,next) =>{
 
     if(!authorized) return res.status(403).json({error:"You are not authorized to perform this request"});
     next();
+}
+
+exports.getUser = (req,res)=>{
+    res.json(req.profile);
 }

@@ -2,17 +2,20 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
-const {userById} = require('../middlewares/auth')
+const {userById, getUser, requireSignin} = require('../middlewares/auth')
 
 const { userSignupValidator } = require("../validation/users");
 
 // get all users
 router.get("/all", (req, res) => {
-  User.find()
-    .then((users) => {
-      res.status(200).json(users);
-    })
-    .catch((err) => res.status(500).json({ error: err }));
+  User.find((err,users)=>{
+    if(err) {
+      return res.status(404).json({error:err})
+    }
+    
+    res.status(200).json({users})
+  }).select("name email created updated")
+    
 });
 
 // user signup
@@ -62,7 +65,7 @@ router.post("/signin", (req, res) => {
       const token = jwt.sign({ _id: user._id }, process.env.JWTsecret);
 
       //persist the token as t with expiry date
-      res.cookie("t", token, { expire: new Date() + 3600 });
+      res.cookie("t", token, { expire: new Date() + 360 });
 
       // return user together with token to the client
       const { _id, name, email } = user;
@@ -79,6 +82,9 @@ router.post('/logout', (req,res)=>{
 
 // check for user ID
 router.param('userID', userById)
+
+// get a single user
+router.get('/:userID',requireSignin, getUser)
 
 
 module.exports = router;
