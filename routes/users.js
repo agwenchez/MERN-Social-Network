@@ -61,7 +61,7 @@ router.post("/signin", (req, res) => {
       }
 
       //if authenticated user, generate token
-      const token = jwt.sign({ _id: user._id }, JWTsecret);
+      const token = jwt.sign({ _id: user._id }, process.env.JWTsecret);
 
       //persist the token as t with expiry date
       res.cookie("t", token, { expire: new Date() + 3600 });
