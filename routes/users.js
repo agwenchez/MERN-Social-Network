@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const JWTsecret = "aduifuiafbcoani";
+const JWTsecret = 'agwenchez';
+
 const User = require("../models/Users");
+require('dotenv').config()
+
 const { userSignupValidator } = require("../validation/users");
 
 // get all users
@@ -52,7 +55,7 @@ router.post("/signin", (req, res) => {
     .then((user) => {
       if (!user) return "Please sign up before you log in";
 
-      // authenticate user, make sure password and useramematch
+      // authenticate user, make sure password and username match
       if (!user.authenticate(password)) {
         return res.status(401).send("Email and password don't match");
       }
@@ -70,10 +73,12 @@ router.post("/signin", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.post('/signout', (req,res)=>{
+// user log out
+router.post('/logout', (req,res)=>{
     res.clearCookie("t");
     return res.json({msg: 'Log out successful'})
 })
+
 
 
 module.exports = router;
