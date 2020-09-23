@@ -22,6 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.3",
+    "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
     "pusher": "^3.0.1",
     "uuid": "^8.3.0"
