@@ -38,7 +38,9 @@ exports.updateUser = (req,res,next) =>{
     user.updated = Date.now()
 
     user.save( err =>{
-        if(err) return res.status(400).json({error:"You are not authorized to perform this function"})
+        if(err) {
+            res.status(400).json({error:"You are not authorized to perform this function"})
+        }
     })
 
     req.profile.password_hash = undefined;

@@ -15,7 +15,7 @@ router.get("/all", (req, res) => {
     
     res.status(200).json({users})
   }).select("name email created updated")
-    
+  .catch((err) => console.log(err));
 });
 
 // user signup
