@@ -1,34 +1,49 @@
 const express = require('express');
+const {
+    getPosts,
+    createPost,
+    postsByUser,
+    postById,
+    isPoster,
+    updatePost,
+    deletePost,
+    photo,
+    singlePost,
+    like,
+    unlike,
+    comment,
+    uncomment,
+    updateComment
+} = require('../controllers/post');
+const { requireSignin } = require('../controllers/auth');
+const { userById } = require('../controllers/user');
+const { createPostValidator } = require('../validator');
+
 const router = express.Router();
-const Post = require('../models/Posts')
-const {userById, requireSignin} = require('../middlewares/user')
 
+router.get('/posts', getPosts);
 
-const {createPostValidator}= require('../validation/posts');
+// like unlike
+router.put('/post/like', requireSignin, like);
+router.put('/post/unlike', requireSignin, unlike);
 
-// get all posts
-router.get('/all',(req,res)=>{
-    Post.find()
-    .then( posts =>{
-        res.status(200).json(posts)
-    }).catch(err => res.status(500).json({error: err}))
-})
+// comments
+router.put('/post/comment', requireSignin, comment);
+router.put('/post/uncomment', requireSignin, uncomment);
+router.put('/post/updatecomment', requireSignin, updateComment);
 
-// create new post
-router.post('/new', requireSignin, createPostValidator ,(req, res)=>{
-    data = req.body
+// post routes
+router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
+router.get('/posts/by/:userId', requireSignin, postsByUser);
+router.get('/post/:postId', singlePost);
+router.put('/post/:postId', requireSignin, isPoster, updatePost);
+router.delete('/post/:postId', requireSignin, isPoster, deletePost);
+// photo
+router.get('/post/photo/:postId', photo);
 
-   const newPost = new Post(data);
-   newPost.save()
-       .then( result =>{
-           res.status(201).json(result);
-       })
-       .catch(err => console.log(err));
-
-})
-
-// check for user ID
-router.param('userID', userById)
-
+// any route containing :userId, our app will first execute userById()
+router.param('userId', userById);
+// any route containing :postId, our app will first execute postById()
+router.param('postId', postById);
 
 module.exports = router;

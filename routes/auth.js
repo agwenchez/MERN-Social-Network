@@ -2,7 +2,7 @@ const express = require('express');
 const { signup, signin, signout, forgotPassword, resetPassword, socialLogin } = require('../controllers/auth');
 
 // import password reset validator
-const { userSignupValidator, userSigninValidator, passwordResetValidator } = require('../validator');
+const { userSignupValidator, userSigninValidator, passwordResetValidator } = require('../validation');
 const { userById } = require('../controllers/user');
 
 const router = express.Router();
