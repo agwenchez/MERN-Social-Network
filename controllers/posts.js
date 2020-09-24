@@ -88,20 +88,20 @@ exports.createPost = (req, res, next) => {
 
 };
 
-exports.postsByUser = (req, res) => {
-    Post.find({ postedBy: req.profile._id })
-        .populate('postedBy', '_id name')
-        .select('_id title body created likes')
-        .sort('_created')
-        .exec((err, posts) => {
-            if (err) {
-                return res.status(400).json({
-                    error: err
-                });
-            }
-            res.json(posts);
-        });
-};
+// exports.postsByUser = (req, res) => {
+//     Post.find({ postedBy: req.profile._id })
+//         .populate('postedBy', '_id name')
+//         .select('_id title body created likes')
+//         .sort('_created')
+//         .exec((err, posts) => {
+//             if (err) {
+//                 return res.status(400).json({
+//                     error: err
+//                 });
+//             }
+//             res.json(posts);
+//         });
+// };
 
 exports.isPoster = (req, res, next) => {
     let sameUser = req.post && req.auth && req.post.postedBy._id == req.auth._id;
