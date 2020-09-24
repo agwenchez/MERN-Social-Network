@@ -134,35 +134,35 @@ exports.createPost = (req, res, next) => {
 //     });
 // };
 
-// exports.updatePost = (req, res, next) => {
-//     let form = new formidable.IncomingForm();
-//     form.keepExtensions = true;
-//     form.parse(req, (err, fields, files) => {
-//         if (err) {
-//             return res.status(400).json({
-//                 error: 'Photo could not be uploaded'
-//             });
-//         }
-//         // save post
-//         let post = req.post;
-//         post = _.extend(post, fields);
-//         post.updated = Date.now();
+exports.updatePost = (req, res, next) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Photo could not be uploaded'
+            });
+        }
+        // save post
+        let post = req.post;
+        post = _.extend(post, fields);
+        post.updated = Date.now();
 
-//         if (files.photo) {
-//             post.photo.data = fs.readFileSync(files.photo.path);
-//             post.photo.contentType = files.photo.type;
-//         }
+        if (files.photo) {
+            post.photo.data = fs.readFileSync(files.photo.path);
+            post.photo.contentType = files.photo.type;
+        }
 
-//         post.save((err, result) => {
-//             if (err) {
-//                 return res.status(400).json({
-//                     error: err
-//                 });
-//             }
-//             res.json(post);
-//         });
-//     });
-// };
+        post.save((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            }
+            res.json(post);
+        });
+    });
+};
 
 exports.deletePost = (req, res) => {
     let post = req.post;
