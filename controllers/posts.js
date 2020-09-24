@@ -36,32 +36,32 @@ exports.getPosts = (req, res) => {
 */
 
 // with pagination
-exports.getPosts = async (req, res) => {
-    // get current page from req.query or use default value of 1
-    const currentPage = req.query.page || 1;
-    // return 3 posts per page
-    const perPage = 6;
-    let totalItems;
+// exports.getPosts = async (req, res) => {
+//     // get current page from req.query or use default value of 1
+//     const currentPage = req.query.page || 1;
+//     // return 3 posts per page
+//     const perPage = 6;
+//     let totalItems;
 
-    const posts = await Post.find()
-        // countDocuments() gives you total count of posts
-        .countDocuments()
-        .then(count => {
-            totalItems = count;
-            return Post.find()
-                .skip((currentPage - 1) * perPage)
-                .populate('comments', 'text created')
-                .populate('comments.postedBy', '_id name')
-                .populate('postedBy', '_id name')
-                .select('_id title body created likes')
-                .limit(perPage)
-                .sort({ created: -1 });
-        })
-        .then(posts => {
-            res.status(200).json(posts);
-        })
-        .catch(err => console.log(err));
-};
+//     const posts = await Post.find()
+//         // countDocuments() gives you total count of posts
+//         .countDocuments()
+//         .then(count => {
+//             totalItems = count;
+//             return Post.find()
+//                 .skip((currentPage - 1) * perPage)
+//                 .populate('comments', 'text created')
+//                 .populate('comments.postedBy', '_id name')
+//                 .populate('postedBy', '_id name')
+//                 .select('_id title body created likes')
+//                 .limit(perPage)
+//                 .sort({ created: -1 });
+//         })
+//         .then(posts => {
+//             res.status(200).json(posts);
+//         })
+//         .catch(err => console.log(err));
+// };
 
 exports.createPost = (req, res, next) => {
     let form = new formidable.IncomingForm();
